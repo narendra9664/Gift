@@ -1,10 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Photo } from "@/components/ui/Photo";
 import { Reveal } from "@/components/ui/Reveal";
 import { ScallopClipDef } from "@/components/ui/shapes";
-import { audience, avatars } from "@/lib/content";
+import { audience } from "@/lib/content";
 
 function AudienceItem({ item, delay }: { item: (typeof audience)[number]; delay: number }) {
   return (
@@ -43,15 +42,17 @@ export function Audience() {
 
         <Reveal delay={0.1} className="my-12 flex justify-center">
           <div className="flex items-center gap-2 rounded-full bg-sun px-4 py-3 shadow-[0_18px_40px_-18px_rgba(150,110,0,0.5)] sm:gap-4 sm:px-6">
-            {avatars.map((shot, i) => (
+            {audience.map((item, i) => (
               <motion.div
-                key={i}
-                className="relative size-16 overflow-hidden bg-brand [clip-path:url(#scallop)] sm:size-20"
+                key={item.title}
+                aria-hidden
+                className={`relative flex size-16 items-center justify-center text-white [clip-path:url(#scallop)] sm:size-20 ${item.tile}`}
                 animate={{ y: [0, -6, 0] }}
                 transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: i * 0.35 }}
                 whileHover={{ scale: 1.12, rotate: -8 }}
               >
-                <Photo shot={shot} sizes="80px" />
+                <span className="absolute inset-0 bg-[radial-gradient(circle_at_35%_30%,rgba(255,255,255,0.55),transparent_55%)]" />
+                <item.icon className="relative size-7 drop-shadow-sm sm:size-8" />
               </motion.div>
             ))}
           </div>

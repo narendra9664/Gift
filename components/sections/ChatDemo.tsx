@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-mot
 import { Check, CheckCheck, Flame, RotateCcw, SendHorizontal } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { CtaButton } from "@/components/ui/CtaButton";
+import { PhoneFrame } from "@/components/ui/PhoneFrame";
 import { EASE_OUT, Reveal } from "@/components/ui/Reveal";
 import { demo, TRIAL_LABEL, TRIAL_URL, type ChatLine } from "@/lib/content";
 
@@ -87,48 +88,40 @@ function Phone() {
 
   return (
     <div ref={ref} className="relative mx-auto w-[min(86vw,320px)]">
-      <div className="rounded-[2.6rem] bg-ink p-2.5 shadow-[0_40px_80px_-30px_rgba(0,40,120,0.55)]">
-        <div className="overflow-hidden rounded-[2.1rem] bg-[#EFEAE2]">
-          <div className="flex items-center gap-3 bg-brand-deep px-4 pt-7 pb-3 text-white">
-            <span className="flex size-9 items-center justify-center rounded-full bg-white/20 text-xs font-bold">
-              {demo.business.initials}
-            </span>
-            <div className="leading-tight">
-              <p className="text-sm font-semibold">{demo.business.name}</p>
-              <p className="text-[11px] text-white/75">Kraya AI assistant · online</p>
-            </div>
-          </div>
-
-          <div
-            className="flex h-[27rem] flex-col justify-end gap-2 overflow-hidden px-3 py-4"
-            aria-live="polite"
-            aria-label="Example WhatsApp conversation"
-          >
-            <AnimatePresence initial={false}>
-              {script.slice(0, visible).map((line, i) => (
-                <motion.div
-                  key={i}
-                  layout
-                  initial={{ opacity: 0, y: 14, scale: 0.96 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ duration: 0.35, ease: EASE_OUT }}
-                  className="flex"
-                >
-                  <Bubble line={line} />
-                </motion.div>
-              ))}
-              {typing && <TypingDots />}
-            </AnimatePresence>
-          </div>
-
-          <div className="flex items-center gap-2 px-3 pb-4">
-            <span className="flex-1 rounded-full bg-white px-4 py-2 text-xs text-ink/40">Message</span>
-            <span className="flex size-8 items-center justify-center rounded-full bg-[#00A884] text-white">
-              <SendHorizontal className="size-4" aria-hidden />
-            </span>
-          </div>
+      <PhoneFrame
+        title={demo.business.name}
+        subtitle="Kraya AI assistant · online"
+        initials={demo.business.initials}
+      >
+        <div
+          className="flex h-[27rem] flex-col justify-end gap-2 overflow-hidden px-3 py-4"
+          aria-live="polite"
+          aria-label="Example WhatsApp conversation"
+        >
+          <AnimatePresence initial={false}>
+            {script.slice(0, visible).map((line, i) => (
+              <motion.div
+                key={i}
+                layout
+                initial={{ opacity: 0, y: 14, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.35, ease: EASE_OUT }}
+                className="flex"
+              >
+                <Bubble line={line} />
+              </motion.div>
+            ))}
+            {typing && <TypingDots />}
+          </AnimatePresence>
         </div>
-      </div>
+
+        <div className="flex items-center gap-2 px-3 pb-4">
+          <span className="flex-1 rounded-full bg-white px-4 py-2 text-xs text-ink/40">Message</span>
+          <span className="flex size-8 items-center justify-center rounded-full bg-[#00A884] text-white">
+            <SendHorizontal className="size-4" aria-hidden />
+          </span>
+        </div>
+      </PhoneFrame>
 
       {finished && !reduce && (
         <button

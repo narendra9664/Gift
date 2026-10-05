@@ -1,17 +1,32 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Photo } from "@/components/ui/Photo";
 import { EASE_OUT, Reveal } from "@/components/ui/Reveal";
+import { GrowthChart } from "@/components/visuals/GrowthChart";
 import { caseStudy } from "@/lib/content";
 
 /* Cards peeking out above and below the main case-study card. */
 const backCards = [
-  { color: "bg-sun", offset: -120, scale: 0.76, shot: caseStudy.stack[0], z: 0 },
-  { color: "bg-[#F9B8D0]", offset: -60, scale: 0.88, shot: caseStudy.stack[1], z: 10 },
-  { color: "bg-[#F9B8D0]", offset: 60, scale: 0.88, shot: caseStudy.stack[0], z: 10 },
-  { color: "bg-sun", offset: 120, scale: 0.76, shot: caseStudy.stack[1], z: 0 },
+  { color: "bg-sun", offset: -120, scale: 0.76, z: 0 },
+  { color: "bg-[#F9B8D0]", offset: -60, scale: 0.88, z: 10 },
+  { color: "bg-[#F9B8D0]", offset: 60, scale: 0.88, z: 10 },
+  { color: "bg-sun", offset: 120, scale: 0.76, z: 0 },
 ];
+
+/* Placeholder "report" lines so the peeking edges read as more case studies. */
+function SkeletonLines() {
+  return (
+    <div className="flex h-full flex-col justify-between p-4">
+      {[0, 1].map((i) => (
+        <div key={i} className="flex items-center gap-2">
+          <span className="size-5 rounded-full bg-white/70" />
+          <span className="h-2 w-24 rounded-full bg-white/70" />
+          <span className="ml-auto h-2 w-10 rounded-full bg-white/50" />
+        </div>
+      ))}
+    </div>
+  );
+}
 
 function GrowthRing() {
   const r = 30;
@@ -80,9 +95,7 @@ export function CaseStudy() {
                 viewport={{ once: true, margin: "0px 0px -20% 0px" }}
                 transition={{ duration: 1, ease: EASE_OUT, delay: 0.2 }}
               >
-                <div className="absolute inset-x-6 inset-y-0 opacity-90">
-                  <Photo shot={card.shot} sizes="260px" />
-                </div>
+                <SkeletonLines />
               </motion.div>
             ))}
 
@@ -92,7 +105,7 @@ export function CaseStudy() {
               transition={{ type: "spring", stiffness: 260, damping: 20 }}
             >
               <div className="relative aspect-[4/5] overflow-hidden rounded-lg">
-                <Photo shot={caseStudy.shot} sizes="320px" />
+                <GrowthChart />
               </div>
               <figcaption className="flex justify-between px-2.5 pt-2.5 pb-1.5 text-sm font-semibold">
                 {caseStudy.stats.map((s) => (

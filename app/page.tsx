@@ -1,6 +1,7 @@
 import { Audience } from "@/components/sections/Audience";
 import { CaseStudy } from "@/components/sections/CaseStudy";
 import { ChatDemo } from "@/components/sections/ChatDemo";
+import { EndPopup } from "@/components/sections/EndPopup";
 import { Faq } from "@/components/sections/Faq";
 import { Footer } from "@/components/sections/Footer";
 import { Hero } from "@/components/sections/Hero";
@@ -32,6 +33,7 @@ export default function Home() {
         <Faq />
       </main>
       <Footer />
+      <EndPopup />
     </MotionProvider>
   );
 }

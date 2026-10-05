@@ -38,53 +38,6 @@ export const navLinks = [
 ];
 
 /* -------------------------------------------------------------------------- */
-/*  Images                                                                     */
-/* -------------------------------------------------------------------------- */
-
-/**
- * Every photo on the page comes from this manifest.
- *
- * The files in /public/images are low-resolution previews of images generated
- * in Canva. Replace each file with its full-size Canva download (keep the same
- * file name) before going live — see README.md for the Canva IDs.
- */
-export const images = {
-  hero: {
-    src: "/images/hero.jpg",
-    alt: "Sales rep in a navy suit leaping through a blue sky holding a phone",
-  },
-  ctaMan: {
-    src: "/images/cta-man.png",
-    alt: "Sales rep in a navy suit jumping while typing on a laptop",
-  },
-  qualification: {
-    src: "/images/card-qualification.jpg",
-    alt: "Woman in a pink suit running through a flower market with a laptop",
-  },
-  followups: {
-    src: "/images/card-followups.jpg",
-    alt: "Man in a green suit surrounded by flying message cards",
-  },
-  recovery: {
-    src: "/images/card-recovery.jpg",
-    alt: "Woman in a black suit working on a laptop while sitting on a crocodile",
-  },
-} as const;
-
-export type ImageKey = keyof typeof images;
-
-/** A photo slot: which image to show and how to crop it. */
-export type Shot = {
-  image: ImageKey;
-  /** CSS object-position, e.g. "50% 30%". */
-  position?: string;
-  /** Zoom factor for tight crops such as avatars. */
-  zoom?: number;
-  /** Cut-out PNG shown on a sky gradient instead of a full-bleed photo. */
-  cutout?: boolean;
-};
-
-/* -------------------------------------------------------------------------- */
 /*  Hero — what the customer wants                                             */
 /* -------------------------------------------------------------------------- */
 
@@ -145,13 +98,17 @@ export const problem = {
 /*  Services                                                                   */
 /* -------------------------------------------------------------------------- */
 
+export type ServiceVisualKind = "qualify" | "followup" | "recover" | "handoff" | "analytics";
+
 export type Service = {
   title: string;
   description: string;
   icon: LucideIcon;
   /** Tailwind background class for the small icon tile. */
   tile: string;
-  shot: Shot;
+  /** Tailwind gradient classes for the card background. */
+  gradient: string;
+  visual: ServiceVisualKind;
 };
 
 export const servicesTitle = ["Everything your", "sales team needs"];
@@ -162,35 +119,40 @@ export const services: Service[] = [
     description: "Configure AI to engage and qualify leads automatically.",
     icon: Bot,
     tile: "bg-[#FF8A00]",
-    shot: { image: "qualification", position: "50% 30%" },
+    gradient: "from-[#FFA233] to-[#F26B00]",
+    visual: "qualify",
   },
   {
     title: "Auto Follow-ups",
     description: "Automate follow-up sequences via WhatsApp with flexible timing.",
     icon: Repeat2,
     tile: "bg-[#A855F7]",
-    shot: { image: "followups", position: "50% 40%" },
+    gradient: "from-[#B978FA] to-[#7C3AED]",
+    visual: "followup",
   },
   {
     title: "Lead Recovery",
     description: "Revive leads that went cold with scheduled nudges.",
     icon: RefreshCcwDot,
     tile: "bg-[#06B6D4]",
-    shot: { image: "recovery", position: "45% 50%" },
+    gradient: "from-[#2CCBE6] to-[#0784A3]",
+    visual: "recover",
   },
   {
     title: "Smart Handoff",
     description: "Pull your rep in the moment a lead turns warm.",
     icon: HandHelping,
     tile: "bg-[#22C55E]",
-    shot: { image: "ctaMan", cutout: true },
+    gradient: "from-[#3DD674] to-[#138A3E]",
+    visual: "handoff",
   },
   {
     title: "Analytics",
     description: "See exactly who went silent and who is ready to buy.",
     icon: ChartNoAxesColumn,
     tile: "bg-[#EC4899]",
-    shot: { image: "hero", position: "62% 50%" },
+    gradient: "from-[#F472B6] to-[#C21C6E]",
+    visual: "analytics",
   },
 ];
 
@@ -204,7 +166,7 @@ export type ChatLine =
 
 export const demo = {
   kicker: "Example conversation",
-  title: ["Watch Kraya work", "the night shift."],
+  title: ["Kraya works", "the night shift."],
   points: [
     "Replies in seconds — even at 11:42 pm.",
     "Asks your qualifying questions: budget, timeline, location.",
@@ -261,14 +223,6 @@ export const audience = [
   },
 ];
 
-/** Face crops: `position` is the face centre, `zoom` how tight the crop is. */
-export const avatars: Shot[] = [
-  { image: "followups", position: "52% 33%", zoom: 2.4 },
-  { image: "qualification", position: "42% 15%", zoom: 2.8 },
-  { image: "ctaMan", position: "49% 12%", zoom: 3.2 },
-  { image: "recovery", position: "48% 22%", zoom: 2.8 },
-];
-
 /* -------------------------------------------------------------------------- */
 /*  Case study                                                                 */
 /* -------------------------------------------------------------------------- */
@@ -279,11 +233,12 @@ export const caseStudy = {
   services: ["AI Qualification", "Auto Follow-up", "Lead Recovery"],
   stats: ["10x Growth.", "1200+ New leads"],
   growth: "10x",
-  shot: { image: "followups", position: "50% 45%" } satisfies Shot,
-  stack: [
-    { image: "qualification", position: "50% 20%" },
-    { image: "recovery", position: "50% 30%" },
-  ] satisfies Shot[],
+  chart: {
+    label: "New leads per month",
+    value: "1,200+",
+    months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+    points: [120, 190, 340, 560, 860, 1240],
+  },
   tags: [
     { label: "AI Qualification", icon: Bot, tile: "bg-[#FF8A00]" },
     { label: "Auto Follow-up", icon: Repeat2, tile: "bg-[#06B6D4]" },
@@ -374,6 +329,23 @@ export const trial = {
   title: ["Try Kraya free", "for 14 days."],
   body: "Leave your name and WhatsApp number. We’ll set up your account and send you the login.",
   submit: "Start my free trial",
+};
+
+/* -------------------------------------------------------------------------- */
+/*  End-of-page pop-up                                                         */
+/* -------------------------------------------------------------------------- */
+
+export const popup = {
+  badge: "Free",
+  kicker: "Before you go…",
+  title: ["See Kraya reply to", "your own leads."],
+  body: "Leave your details and we’ll WhatsApp you a free demo set up for your business.",
+  industriesLabel: "What do you sell? (optional)",
+  industries: ["Education", "Real estate", "Healthcare", "Fitness", "Logistics", "Other"],
+  submit: "Get my free demo",
+  // TODO: only promise a response time your team can actually keep.
+  success: "We’ll WhatsApp you within one business hour to set up your demo.",
+  privacy: "We’ll only use your number to contact you about Kraya.",
 };
 
 /** Draggable footer stickers; x / y are % offsets inside the sticker area. */

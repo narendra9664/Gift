@@ -48,11 +48,13 @@ type CloudsProps = {
   className?: string;
   /** Colour the clouds fade into at the bottom. */
   base?: string;
+  /** Set false for free-floating clouds that shouldn't fade into a section below. */
+  fade?: boolean;
   seed?: number;
 };
 
 /** A bank of puffy clouds that sits on the bottom edge of a section. Pass its size via `className`. */
-export function Clouds({ className = "", base = "#f5f5f0", seed = 1 }: CloudsProps) {
+export function Clouds({ className = "", base = "#f5f5f0", fade = true, seed = 1 }: CloudsProps) {
   const rand = random(seed);
   // Three rows of puffs, back to front. The front row dips below the bottom
   // edge so the bank always reads as solid where it meets the next section.
@@ -69,7 +71,7 @@ export function Clouds({ className = "", base = "#f5f5f0", seed = 1 }: CloudsPro
     }
   }
   const shade = `cloud-shade-${seed}`;
-  const fade = `cloud-fade-${seed}`;
+  const fadeId = `cloud-fade-${seed}`;
   const soft = `cloud-soft-${seed}`;
 
   return (
@@ -86,7 +88,7 @@ export function Clouds({ className = "", base = "#f5f5f0", seed = 1 }: CloudsPro
           <stop offset="0.85" stopColor="#e4eefa" />
           <stop offset="1" stopColor="#c6d9f0" />
         </radialGradient>
-        <linearGradient id={fade} x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id={fadeId} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor={base} stopOpacity="0" />
           <stop offset="1" stopColor={base} />
         </linearGradient>
@@ -99,7 +101,7 @@ export function Clouds({ className = "", base = "#f5f5f0", seed = 1 }: CloudsPro
           <circle key={i} cx={round(p.cx)} cy={round(p.cy)} r={round(p.r)} fill={`url(#${shade})`} />
         ))}
       </g>
-      <rect x="-10" y="215" width="1460" height="86" fill={`url(#${fade})`} />
+      {fade && <rect x="-10" y="215" width="1460" height="86" fill={`url(#${fadeId})`} />}
     </svg>
   );
 }

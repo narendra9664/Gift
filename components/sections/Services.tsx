@@ -2,8 +2,8 @@
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef } from "react";
-import { Photo } from "@/components/ui/Photo";
 import { Reveal } from "@/components/ui/Reveal";
+import { ServiceVisual } from "@/components/visuals/ServiceVisual";
 import { services, servicesTitle } from "@/lib/content";
 
 export function Services() {
@@ -38,18 +38,19 @@ export function Services() {
           {services.map((s) => (
             <li
               key={s.title}
-              className="group relative aspect-[3/5] w-[72vw] max-w-[300px] shrink-0 snap-center overflow-hidden rounded-2xl bg-brand-deep shadow-[0_20px_50px_-20px_rgba(0,30,90,0.6)] transition-transform duration-500 ease-out-expo hover:-translate-y-2 sm:w-[260px] xl:w-[min(17vw,272px)]"
+              className={`group relative aspect-[3/5] w-[72vw] max-w-[300px] shrink-0 snap-center overflow-hidden rounded-2xl bg-linear-to-b shadow-[0_20px_50px_-20px_rgba(0,30,90,0.6)] transition-transform duration-500 ease-out-expo hover:-translate-y-2 sm:w-[260px] xl:w-[min(17vw,272px)] ${s.gradient}`}
             >
-              <div className="absolute inset-0 transition-transform duration-700 ease-out-expo group-hover:scale-[1.06]">
-                <Photo shot={s.shot} sizes="300px" />
-              </div>
-              <div className="absolute inset-x-0 bottom-0 h-2/3 bg-linear-to-t from-black/75 via-black/30 to-transparent" />
-              <span
-                className={`absolute top-4 right-4 flex size-8 items-center justify-center rounded-md text-white shadow-md ${s.tile}`}
-              >
+              {/* Decorative depth. */}
+              <span aria-hidden className="absolute -top-16 -right-16 size-48 rounded-full bg-white/12" />
+              <span aria-hidden className="absolute -bottom-24 -left-12 size-56 rounded-full bg-black/8" />
+
+              <span className="absolute top-4 left-4 flex size-8 items-center justify-center rounded-md bg-white/20 text-white ring-1 ring-white/30">
                 <s.icon className="size-4" aria-hidden />
               </span>
-              <div className="absolute inset-x-0 bottom-0 p-5">
+              <div className="absolute inset-x-4 top-16 transition-transform duration-500 ease-out-expo group-hover:-translate-y-1.5 group-hover:scale-[1.02]">
+                <ServiceVisual kind={s.visual} />
+              </div>
+              <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/35 to-transparent p-5 pt-10">
                 <h3 className="font-display text-[1.9rem] leading-none tracking-tight">{s.title}</h3>
                 <p className="mt-2 text-sm leading-snug text-white/85">{s.description}</p>
               </div>

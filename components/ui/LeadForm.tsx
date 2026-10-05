@@ -7,21 +7,33 @@ import { EASE_OUT } from "@/components/ui/Reveal";
 
 type LeadFormProps = {
   /** Must match a form declared in public/__forms.html. */
-  formName: "trial" | "leak-report";
+  formName: "trial" | "leak-report" | "end-popup";
   submitLabel: string;
   successMessage: string;
   /** Extra values sent with the submission, e.g. calculator results. */
   extra?: Record<string, string>;
+  /** Extra inputs rendered between the contact fields and the submit button. */
+  extraFields?: React.ReactNode;
   tone?: "blue" | "white";
 };
 
 type Status = "idle" | "sending" | "done" | "error";
 
+/** localStorage key set once a visitor has left their details on any form. */
+export const LEAD_CAPTURED_KEY = "kraya:lead-captured";
+
 const inputBase =
   "h-12 w-full rounded-md border px-4 text-base outline-none transition-colors focus:ring-2 sm:text-sm";
 
 /** Two-field lead form (name + WhatsApp) that submits to Netlify Forms. */
-export function LeadForm({ formName, submitLabel, successMessage, extra, tone = "blue" }: LeadFormProps) {
+export function LeadForm({
+  formName,
+  submitLabel,
+  successMessage,
+  extra,
+  extraFields,
+  tone = "blue",
+}: LeadFormProps) {
   const [status, setStatus] = useState<Status>("idle");
   const [firstName, setFirstName] = useState("");
 
@@ -40,6 +52,11 @@ export function LeadForm({ formName, submitLabel, successMessage, extra, tone = 
         body: body.toString(),
       });
       if (!res.ok) throw new Error(`Form submission failed: ${res.status}`);
+      try {
+        localStorage.setItem(LEAD_CAPTURED_KEY, "1");
+      } catch {
+        // Storage can be blocked (private mode); the pop-up may just show again.
+      }
       setFirstName(String(data.get("name") ?? "").trim().split(" ")[0]);
       setStatus("done");
     } catch {
@@ -107,6 +124,8 @@ export function LeadForm({ formName, submitLabel, successMessage, extra, tone = 
               />
             </label>
           </div>
+
+          {extraFields}
 
           <button
             type="submit"

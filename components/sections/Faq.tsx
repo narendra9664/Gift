@@ -1,17 +1,16 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
 import { Minus, Plus } from "lucide-react";
 import { useId, useState } from "react";
 import { CtaButton } from "@/components/ui/CtaButton";
 import { LeadForm } from "@/components/ui/LeadForm";
 import { EASE_OUT, Reveal } from "@/components/ui/Reveal";
 import { Clouds } from "@/components/ui/shapes";
+import { TrialPhone } from "@/components/visuals/TrialPhone";
 import {
   CALLBACK_PROMISE,
   faqs,
-  images,
   PRICE_NOTE,
   trial,
   TRIAL_LABEL,
@@ -78,15 +77,15 @@ function TrialCta() {
   return (
     <div id="start-trial" className="relative mt-40 scroll-mt-40 md:mt-36">
       <div className="relative min-h-[34rem] rounded-3xl md:min-h-[22rem]">
-        {/* Background + clouds are clipped to the card; the rep breaks out of the top. */}
+        {/* Background + clouds are clipped to the card; the phone breaks out of the top. */}
         <div className="absolute inset-0 overflow-hidden rounded-3xl bg-linear-to-br from-brand-light via-brand to-brand-deep" />
 
         <motion.div
-          className="absolute -top-28 left-1/2 z-10 h-[24rem] w-[19rem] -translate-x-1/2 md:-top-32 md:left-[6%] md:h-[30rem] md:w-[24rem] md:translate-x-0"
+          className="absolute -top-24 left-1/2 z-10 w-60 -translate-x-1/2 -rotate-6 md:left-[12%] md:w-68 md:translate-x-0"
           animate={{ y: [0, -12, 0] }}
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
         >
-          <Image src={images.ctaMan.src} alt={images.ctaMan.alt} fill sizes="400px" className="object-contain object-bottom" />
+          <TrialPhone />
         </motion.div>
 
         <div className="pointer-events-none absolute inset-0 z-20 hidden overflow-hidden rounded-3xl md:block">
