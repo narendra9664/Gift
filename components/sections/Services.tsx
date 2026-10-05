@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef } from "react";
 import { Photo } from "@/components/ui/Photo";
 import { Reveal } from "@/components/ui/Reveal";
-import { services } from "@/lib/content";
+import { services, servicesTitle } from "@/lib/content";
 
 export function Services() {
   const track = useRef<HTMLUListElement>(null);
@@ -21,9 +21,11 @@ export function Services() {
       <div className="mx-auto flex max-w-7xl flex-col items-center px-5 md:px-8">
         <Reveal>
           <h2 className="display text-center text-[clamp(2.75rem,6vw,5rem)]">
-            Everything your
-            <br />
-            marketing needs
+            {servicesTitle.map((line) => (
+              <span key={line} className="block">
+                {line}
+              </span>
+            ))}
           </h2>
         </Reveal>
       </div>

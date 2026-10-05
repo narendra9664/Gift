@@ -6,7 +6,7 @@ import { CountUp } from "@/components/ui/CountUp";
 import { CtaButton } from "@/components/ui/CtaButton";
 import { EASE_OUT } from "@/components/ui/Reveal";
 import { Laurel } from "@/components/ui/shapes";
-import { EXPERT_SESSION_LABEL, EXPERT_SESSION_URL, hero, images } from "@/lib/content";
+import { hero, images, PRICE_NOTE, TRIAL_LABEL, TRIAL_URL } from "@/lib/content";
 
 export function Hero() {
   return (
@@ -33,7 +33,7 @@ export function Hero() {
       <div className="absolute inset-x-0 bottom-0 -z-10 h-1/3 bg-linear-to-t from-brand-deep/80 to-transparent" />
 
       <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-5 pt-28 md:px-8 lg:pt-32">
-        <h1 className="display text-[clamp(4.5rem,14vw,11.5rem)] leading-[0.84]">
+        <h1 className="display text-[clamp(3.5rem,10vw,9rem)] leading-[0.86]">
           {hero.titleLines.map((line, i) => (
             <span key={line} className="block overflow-hidden pb-[0.04em]">
               <motion.span
@@ -55,9 +55,16 @@ export function Hero() {
           className="mt-6 max-w-md"
         >
           <p className="text-base leading-relaxed text-white/90 md:text-[1.05rem]">{hero.body}</p>
-          <CtaButton href={EXPERT_SESSION_URL} className="mt-7">
-            {EXPERT_SESSION_LABEL}
-          </CtaButton>
+          <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <CtaButton href={TRIAL_URL}>{TRIAL_LABEL}</CtaButton>
+            <a
+              href={hero.secondary.href}
+              className="py-3 text-sm font-semibold underline decoration-white/40 underline-offset-4 transition-colors hover:decoration-white"
+            >
+              {hero.secondary.label}
+            </a>
+          </div>
+          <p className="mt-3 text-xs text-white/75">{PRICE_NOTE}</p>
         </motion.div>
 
         <motion.dl

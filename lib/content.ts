@@ -5,27 +5,36 @@ import {
   ChartNoAxesColumn,
   GraduationCap,
   HandHelping,
+  MessagesSquare,
+  MoonStar,
   RefreshCcwDot,
   Repeat2,
   Rocket,
+  Split,
+  UserRoundX,
   type LucideIcon,
 } from "lucide-react";
 
 /* -------------------------------------------------------------------------- */
-/*  Links                                                                      */
+/*  Calls to action                                                            */
 /* -------------------------------------------------------------------------- */
 
-// TODO: point this at the real booking flow (Calendly, wa.me/<number>, etc.).
-export const EXPERT_SESSION_URL = "#contact";
-export const EXPERT_SESSION_LABEL = "Book A FREE Expert Session";
+// TODO: point this at the real sign-up page once there is one. Until then the
+// trial buttons open the on-page trial form, which saves leads to Netlify Forms.
+export const TRIAL_URL = "#start-trial";
+export const TRIAL_LABEL = "Start 14-day free trial";
+export const TRIAL_LABEL_SHORT = "Start free trial";
+export const PRICE_NOTE = "14-day free trial · Plans from ₹2,999/month";
+
+// TODO: only promise a response time your team can actually keep.
+export const CALLBACK_PROMISE = "We’ll WhatsApp you your login within one business hour.";
 
 export const navLinks = [
   { label: "Features", href: "#features" },
   { label: "How It Works", href: "#how-it-works" },
-  // TODO: these pages don't exist yet — replace with real URLs.
-  { label: "Pricing", href: "#" },
-  { label: "Integrations", href: "#" },
-  { label: "Blog", href: "#" },
+  { label: "Calculator", href: "#calculator" },
+  { label: "Pricing", href: TRIAL_URL },
+  { label: "FAQ", href: "#faq" },
 ];
 
 /* -------------------------------------------------------------------------- */
@@ -76,13 +85,15 @@ export type Shot = {
 };
 
 /* -------------------------------------------------------------------------- */
-/*  Hero                                                                       */
+/*  Hero — what the customer wants                                             */
 /* -------------------------------------------------------------------------- */
 
 export const hero = {
-  titleLines: ["Move the", "Business"],
-  body: "Kraya builds AI sales systems that convert your ads into leads — and makes sure none of them die. WhatsApp-first automation for teams that never want to lose a lead.",
+  titleLines: ["Stop losing", "WhatsApp leads"],
+  body: "Kraya’s AI replies to every enquiry in seconds, asks your qualifying questions and follows up until the lead is ready — so your team only talks to buyers.",
+  secondary: { label: "See it in action", href: "#demo" },
   badge: { value: 14, label: "Day free trial" },
+  // TODO: 3× and 50% came from the brief, not published data. Verify or replace.
   stats: [
     { value: 1000, suffix: "+", label: "Businesses growing" },
     { value: 3, suffix: "×", label: "Higher response rate" },
@@ -91,12 +102,51 @@ export const hero = {
 };
 
 /* -------------------------------------------------------------------------- */
+/*  Problem — the villain, its symptoms and how it feels                       */
+/* -------------------------------------------------------------------------- */
+
+export const problem = {
+  statement: {
+    dark: "Your business doesn’t need more",
+    light: "chats. It needs a system that closes.",
+  },
+  kicker: "Sound familiar?",
+  symptoms: [
+    {
+      title: "The 11 pm enquiry",
+      body: "A lead messages at night. Nobody replies. By morning they’ve bought from someone else.",
+      icon: MoonStar,
+      tile: "bg-[#A855F7]",
+    },
+    {
+      title: "The missed follow-up",
+      body: "Your rep said they’d follow up. They didn’t — and you’ll never know.",
+      icon: UserRoundX,
+      tile: "bg-[#FF8A00]",
+    },
+    {
+      title: "The chat pile-up",
+      body: "Hundreds of chats, and no idea who is actually ready to buy.",
+      icon: MessagesSquare,
+      tile: "bg-[#06B6D4]",
+    },
+    {
+      title: "The scattered sources",
+      body: "Meta ads, IndiaMART and missed calls all land in different places.",
+      icon: Split,
+      tile: "bg-[#EC4899]",
+    },
+  ] satisfies { title: string; body: string; icon: LucideIcon; tile: string }[],
+  feeling:
+    "You’re paying for every one of these leads. Watching them leak away shouldn’t be part of the job.",
+};
+
+/* -------------------------------------------------------------------------- */
 /*  Services                                                                   */
 /* -------------------------------------------------------------------------- */
 
 export type Service = {
   title: string;
-  short: string;
   description: string;
   icon: LucideIcon;
   /** Tailwind background class for the small icon tile. */
@@ -104,10 +154,11 @@ export type Service = {
   shot: Shot;
 };
 
+export const servicesTitle = ["Everything your", "sales team needs"];
+
 export const services: Service[] = [
   {
     title: "AI Qualification",
-    short: "Only talk to leads who are ready.",
     description: "Configure AI to engage and qualify leads automatically.",
     icon: Bot,
     tile: "bg-[#FF8A00]",
@@ -115,7 +166,6 @@ export const services: Service[] = [
   },
   {
     title: "Auto Follow-ups",
-    short: "No enquiry goes quiet without a nudge.",
     description: "Automate follow-up sequences via WhatsApp with flexible timing.",
     icon: Repeat2,
     tile: "bg-[#A855F7]",
@@ -123,7 +173,6 @@ export const services: Service[] = [
   },
   {
     title: "Lead Recovery",
-    short: "Bring cold leads back to the table.",
     description: "Revive leads that went cold with scheduled nudges.",
     icon: RefreshCcwDot,
     tile: "bg-[#06B6D4]",
@@ -131,7 +180,6 @@ export const services: Service[] = [
   },
   {
     title: "Smart Handoff",
-    short: "Your rep steps in at the right moment.",
     description: "Pull your rep in the moment a lead turns warm.",
     icon: HandHelping,
     tile: "bg-[#22C55E]",
@@ -139,13 +187,48 @@ export const services: Service[] = [
   },
   {
     title: "Analytics",
-    short: "Know who’s silent and who’s ready.",
     description: "See exactly who went silent and who is ready to buy.",
     icon: ChartNoAxesColumn,
     tile: "bg-[#EC4899]",
     shot: { image: "hero", position: "62% 50%" },
   },
 ];
+
+/* -------------------------------------------------------------------------- */
+/*  Product demo                                                               */
+/* -------------------------------------------------------------------------- */
+
+export type ChatLine =
+  | { from: "lead" | "bot"; text: string; time: string }
+  | { from: "system"; text: string };
+
+export const demo = {
+  kicker: "Example conversation",
+  title: ["Watch Kraya work", "the night shift."],
+  points: [
+    "Replies in seconds — even at 11:42 pm.",
+    "Asks your qualifying questions: budget, timeline, location.",
+    "Books the call and alerts your rep the moment a lead is hot.",
+  ],
+  business: { name: "Skyline Homes", initials: "SH" },
+  chat: [
+    { from: "lead", text: "Hi, saw your ad. What’s the price of the 3BHK?", time: "11:42 pm" },
+    {
+      from: "bot",
+      text: "Hi Rahul 👋 The 3BHK starts at ₹85 lakh. Are you planning to buy in the next 3 months?",
+      time: "11:42 pm",
+    },
+    { from: "lead", text: "Yes, within 2 months.", time: "11:43 pm" },
+    { from: "bot", text: "Great. Roughly what budget are you working with?", time: "11:43 pm" },
+    { from: "lead", text: "Around 90 lakh.", time: "11:44 pm" },
+    {
+      from: "bot",
+      text: "Perfect, that fits. I’ve booked a call with Priya from our team for 10:30 am tomorrow ✅",
+      time: "11:44 pm",
+    },
+    { from: "system", text: "Hot lead · assigned to Priya" },
+  ] satisfies ChatLine[],
+};
 
 /* -------------------------------------------------------------------------- */
 /*  Audience                                                                   */
@@ -190,6 +273,7 @@ export const avatars: Shot[] = [
 /*  Case study                                                                 */
 /* -------------------------------------------------------------------------- */
 
+// TODO: placeholder from the brief. Replace with a real, named customer result.
 export const caseStudy = {
   title: "Personal Coach Digital Presence",
   services: ["AI Qualification", "Auto Follow-up", "Lead Recovery"],
@@ -205,37 +289,6 @@ export const caseStudy = {
     { label: "Auto Follow-up", icon: Repeat2, tile: "bg-[#06B6D4]" },
     { label: "Lead Recovery", icon: RefreshCcwDot, tile: "bg-[#A855F7]" },
   ],
-};
-
-/* -------------------------------------------------------------------------- */
-/*  Approach                                                                   */
-/* -------------------------------------------------------------------------- */
-
-export const approach = {
-  steps: [
-    {
-      title: "Understand",
-      body: "We map how leads reach you today — ads, IndiaMART, missed calls, walk-ins — and where they slip away.",
-      shot: { image: "followups", position: "50% 38%" } satisfies Shot,
-    },
-    {
-      title: "Define",
-      body: "We identify the biggest opportunity and build a clear sales direction around it.",
-      shot: { image: "hero", position: "60% 40%" } satisfies Shot,
-    },
-    {
-      title: "Releasing old patterns",
-      body: "We retire the spreadsheets, manual reminders and forgotten chats that slow your team down.",
-      shot: { image: "ctaMan", cutout: true } satisfies Shot,
-    },
-    {
-      title: "Foundations of your mind",
-      body: "We set up the stages, habits and reports your team runs on every day.",
-      shot: { image: "followups", position: "50% 70%" } satisfies Shot,
-    },
-  ],
-  title: ["Less guessing.", "More direction."],
-  body: "We don’t start by asking what you want to post next. We start by understanding what the business needs next.",
 };
 
 /* -------------------------------------------------------------------------- */
@@ -266,6 +319,27 @@ export const system = {
 };
 
 /* -------------------------------------------------------------------------- */
+/*  Lead leak calculator (lead magnet)                                         */
+/* -------------------------------------------------------------------------- */
+
+export const calculator = {
+  title: ["How much is your", "WhatsApp leaking?"],
+  body: "Move the sliders. The result is the revenue you’d win if the leads you never follow up closed at your normal rate.",
+  footnote: "An estimate based only on the numbers you enter.",
+  inputs: {
+    leads: { label: "Leads per month", min: 50, max: 5000, step: 50, initial: 300 },
+    value: { label: "Average sale value", min: 1000, max: 500000, step: 1000, initial: 20000 },
+    leak: { label: "Leads that never get a proper follow-up", min: 5, max: 80, step: 5, initial: 30 },
+    close: { label: "Your close rate", min: 1, max: 50, step: 1, initial: 10 },
+  },
+  capture: {
+    heading: "Get this report on WhatsApp",
+    submit: "Send my report",
+    success: "Done — we’ll send your report to WhatsApp.",
+  },
+};
+
+/* -------------------------------------------------------------------------- */
 /*  FAQ                                                                        */
 /* -------------------------------------------------------------------------- */
 
@@ -293,12 +367,13 @@ export const faqs = [
 ];
 
 /* -------------------------------------------------------------------------- */
-/*  CTA + footer                                                               */
+/*  Trial CTA + footer                                                         */
 /* -------------------------------------------------------------------------- */
 
-export const cta = {
-  title: ["Let’s make the", "next move", "clear."],
-  body: "Tell us how leads reach you today, and we’ll show you where they’re slipping away.",
+export const trial = {
+  title: ["Try Kraya free", "for 14 days."],
+  body: "Leave your name and WhatsApp number. We’ll set up your account and send you the login.",
+  submit: "Start my free trial",
 };
 
 /** Draggable footer stickers; x / y are % offsets inside the sticker area. */
@@ -322,10 +397,10 @@ export const footer = {
       links: [
         { label: "Features", href: "#features" },
         { label: "How It Works", href: "#how-it-works" },
-        { label: "Pricing", href: "#" },
-        { label: "Integrations", href: "#" },
-        { label: "Blog", href: "#" },
-        { label: "Contact", href: "#contact" },
+        { label: "Lead Leak Calculator", href: "#calculator" },
+        { label: "Pricing", href: TRIAL_URL },
+        { label: "FAQ", href: "#faq" },
+        { label: TRIAL_LABEL_SHORT, href: TRIAL_URL },
       ],
     },
     {

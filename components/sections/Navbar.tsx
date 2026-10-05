@@ -4,7 +4,7 @@ import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-
 import { ArrowRight, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { CtaButton } from "@/components/ui/CtaButton";
-import { EXPERT_SESSION_LABEL, EXPERT_SESSION_URL, navLinks } from "@/lib/content";
+import { navLinks, TRIAL_LABEL_SHORT, TRIAL_URL } from "@/lib/content";
 
 export function Logo() {
   return (
@@ -52,8 +52,8 @@ export function Navbar() {
         </ul>
 
         <div className="hidden md:block">
-          <CtaButton href={EXPERT_SESSION_URL} shape="pill" className="py-2.5">
-            {EXPERT_SESSION_LABEL}
+          <CtaButton href={TRIAL_URL} shape="pill" className="py-2.5">
+            {TRIAL_LABEL_SHORT}
           </CtaButton>
         </div>
 
@@ -110,11 +110,11 @@ export function Navbar() {
               ))}
             </ul>
             <a
-              href={EXPERT_SESSION_URL}
+              href={TRIAL_URL}
               onClick={() => setOpen(false)}
               className="mt-auto flex items-center justify-center gap-2 rounded-full bg-white py-4 font-semibold text-ink"
             >
-              {EXPERT_SESSION_LABEL}
+              {TRIAL_LABEL_SHORT}
               <ArrowRight className="size-4" aria-hidden />
             </a>
           </motion.div>

@@ -1,0 +1,31 @@
+<!doctype html>
+<!--
+  Netlify Forms detects forms in static HTML at build time. The React forms in
+  components/ui/LeadForm.tsx post to this file; keep the field names in sync.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Forms</title>
+  </head>
+  <body>
+    <form name="trial" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="trial" />
+      <input name="bot-field" />
+      <input name="name" />
+      <input name="whatsapp" />
+    </form>
+
+    <form name="leak-report" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="leak-report" />
+      <input name="bot-field" />
+      <input name="name" />
+      <input name="whatsapp" />
+      <input name="leads_per_month" />
+      <input name="sale_value" />
+      <input name="leak_percent" />
+      <input name="close_rate" />
+      <input name="monthly_loss" />
+    </form>
+  </body>
+</html>

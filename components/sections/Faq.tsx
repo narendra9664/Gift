@@ -5,9 +5,18 @@ import Image from "next/image";
 import { Minus, Plus } from "lucide-react";
 import { useId, useState } from "react";
 import { CtaButton } from "@/components/ui/CtaButton";
+import { LeadForm } from "@/components/ui/LeadForm";
 import { EASE_OUT, Reveal } from "@/components/ui/Reveal";
 import { Clouds } from "@/components/ui/shapes";
-import { cta, EXPERT_SESSION_LABEL, EXPERT_SESSION_URL, faqs, images } from "@/lib/content";
+import {
+  CALLBACK_PROMISE,
+  faqs,
+  images,
+  PRICE_NOTE,
+  trial,
+  TRIAL_LABEL,
+  TRIAL_URL,
+} from "@/lib/content";
 
 function FaqItem({
   q,
@@ -65,9 +74,9 @@ function FaqItem({
   );
 }
 
-function ContactCta() {
+function TrialCta() {
   return (
-    <div id="contact" className="relative mt-40 md:mt-36">
+    <div id="start-trial" className="relative mt-40 scroll-mt-40 md:mt-36">
       <div className="relative min-h-[34rem] rounded-3xl md:min-h-[22rem]">
         {/* Background + clouds are clipped to the card; the rep breaks out of the top. */}
         <div className="absolute inset-0 overflow-hidden rounded-3xl bg-linear-to-br from-brand-light via-brand to-brand-deep" />
@@ -88,19 +97,20 @@ function ContactCta() {
           />
         </div>
 
-        <div className="relative z-30 flex min-h-[34rem] flex-col justify-end p-8 text-white md:ml-[52%] md:min-h-[22rem] md:justify-center md:p-12">
+        <div className="relative z-30 flex min-h-[34rem] flex-col justify-end p-6 pt-72 text-white sm:p-8 sm:pt-72 md:ml-[48%] md:min-h-[24rem] md:justify-center md:p-12">
           <Reveal>
             <h2 className="display text-[clamp(2.75rem,5vw,4.5rem)]">
-              {cta.title.map((line) => (
+              {trial.title.map((line) => (
                 <span key={line} className="block">
                   {line}
                 </span>
               ))}
             </h2>
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/90">{cta.body}</p>
-            <CtaButton href={EXPERT_SESSION_URL} className="mt-6">
-              {EXPERT_SESSION_LABEL}
-            </CtaButton>
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/90">{trial.body}</p>
+            <div className="mt-6">
+              <LeadForm formName="trial" submitLabel={trial.submit} successMessage={CALLBACK_PROMISE} />
+            </div>
+            <p className="mt-4 text-xs text-white/75">{PRICE_NOTE}</p>
           </Reveal>
         </div>
       </div>
@@ -124,8 +134,8 @@ export function Faq() {
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-ink/65">
               Didn’t find your answer here? Talk to our team and we’ll walk you through it.
             </p>
-            <CtaButton href={EXPERT_SESSION_URL} variant="blue" className="mt-7">
-              {EXPERT_SESSION_LABEL}
+            <CtaButton href={TRIAL_URL} variant="blue" className="mt-7">
+              {TRIAL_LABEL}
             </CtaButton>
           </Reveal>
 
@@ -138,7 +148,7 @@ export function Faq() {
           </Reveal>
         </div>
 
-        <ContactCta />
+        <TrialCta />
       </div>
     </section>
   );

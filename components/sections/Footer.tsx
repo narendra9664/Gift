@@ -66,10 +66,10 @@ export function Footer() {
           {footer.columns.map((col) => (
             <nav key={col.heading} aria-label={col.heading}>
               <h3 className="text-xs font-semibold">{col.heading}</h3>
-              <ul className="mt-4 flex flex-col gap-2.5">
+              <ul className="mt-3 flex flex-col gap-0.5">
                 {col.links.map((link) => (
                   <li key={link.label}>
-                    <a href={link.href} className="text-xs text-ink/65 transition-colors hover:text-brand">
+                    <a href={link.href} className="inline-block py-1.5 text-sm text-ink/65 transition-colors hover:text-brand">
                       {link.label}
                     </a>
                   </li>
@@ -79,7 +79,7 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="flex flex-col gap-3 border-t border-ink/10 pt-6 text-[11px] text-ink/55 sm:flex-row sm:items-center sm:gap-6">
+        <div className="flex flex-col gap-3 border-t border-ink/10 pt-6 text-xs text-ink/55 sm:flex-row sm:items-center sm:gap-6">
           <p>© {year} Kraya AI. All rights reserved.</p>
           <a href="#" className="hover:text-brand">
             Privacy Policy
